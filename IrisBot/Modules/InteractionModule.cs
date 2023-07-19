@@ -74,8 +74,12 @@ namespace IrisBot.Modules
 
         private async Task SlashCommandExecuted(SocketSlashCommand cmd)
         {
+            string param = "";
+            foreach (var par in cmd.Data.Options)
+                param += $" {par.Value}";
+            
             await CustomLog.PrintLog(LogSeverity.Info, "Interaction",
-                    $"Slash Command executed {cmd.CommandName} (Guild: {cmd.GuildId}, Channel: {cmd.Channel.Name}, User: {cmd.User.Username})");
+                $"Slash Command executed (/{cmd.CommandName}{param}) (Guild: {cmd.GuildId}, Channel: {cmd.Channel.Name}, User: {cmd.User.Username})");
         }
 
         private async Task MessageCommandExecuted(SocketMessageCommand cmd)
