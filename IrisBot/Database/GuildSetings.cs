@@ -81,7 +81,7 @@ namespace IrisBot.Database
                         {
                             using (var createTable = new SQLiteCommand("CREATE TABLE Guilds(ID TEXT PRIMARY KEY, VOLUME REAL, LANG INTEGER, SEARCHMODE INTEGER, ROLEMESSAGE TEXT, ROLEEMOJI TEXT, ISPRIVATE INTEGER)", conn))
                             {
-                                CustomLog.PrintLog(LogSeverity.Warning, "Database", "Table \"Guilds\" not exists. Creating new one.");
+                                await CustomLog.PrintLog(LogSeverity.Warning, "Database", "Table \"Guilds\" not exists. Creating new one.");
                                 await createTable.ExecuteNonQueryAsync();
                             }
                         }
@@ -121,7 +121,7 @@ namespace IrisBot.Database
 
                             GetGuildsList().Add(new GuildSettings(guildId, volume, lang, mode, roleMessage, output, isPrivate));
 
-                            CustomLog.PrintLog(LogSeverity.Info, "Database", 
+                            await CustomLog.PrintLog(LogSeverity.Info, "Database", 
                                 $"Load success (GuildId: {Convert.ToUInt64(reader["ID"])}, Language: {(Translations)Convert.ToInt32(reader["LANG"])})");
                         }
                     }
@@ -156,7 +156,7 @@ namespace IrisBot.Database
                         cmd.Parameters.AddWithValue("@ID", guildId.ToString());
                         cmd.Parameters.AddWithValue("@VOLUME", volume);
                         await cmd.ExecuteNonQueryAsync();
-                        CustomLog.PrintLog(LogSeverity.Info, "Database",
+                        await CustomLog.PrintLog(LogSeverity.Info, "Database",
                             $"Changed volume to {volume} (GuildId: {guildId})");
                     }
                 }
@@ -194,7 +194,7 @@ namespace IrisBot.Database
                         cmd.Parameters.AddWithValue("@ID", guildId.ToString());
                         cmd.Parameters.AddWithValue("@LANG", language);
                         await cmd.ExecuteNonQueryAsync();
-                        CustomLog.PrintLog(LogSeverity.Info, "Database",
+                        await CustomLog.PrintLog(LogSeverity.Info, "Database",
                             $"Changed searchmode to {language} (GuildId: {guildId})");
                     }
                 }
@@ -232,7 +232,7 @@ namespace IrisBot.Database
                         cmd.Parameters.AddWithValue("@ID", guildId.ToString());
                         cmd.Parameters.AddWithValue("@SEARCHMODE", searchMode);
                         await cmd.ExecuteNonQueryAsync();
-                        CustomLog.PrintLog(LogSeverity.Info, "Database",
+                        await CustomLog.PrintLog(LogSeverity.Info, "Database",
                             $"Changed searchmode to {searchMode} (GuildId: {guildId})");
                     }
                 }
@@ -264,7 +264,7 @@ namespace IrisBot.Database
                         cmd.Parameters.AddWithValue("@ID", guildId.ToString());
                         cmd.Parameters.AddWithValue("@ISPRIVATE", isPrivate);
                         await cmd.ExecuteNonQueryAsync();
-                        CustomLog.PrintLog(LogSeverity.Info, "Database",
+                        await CustomLog.PrintLog(LogSeverity.Info, "Database",
                             $"Changed IsPrivate to {isPrivate} (GuildId: {guildId})");
                     }
                 }
@@ -302,7 +302,7 @@ namespace IrisBot.Database
                         cmd.Parameters.AddWithValue("@ID", guildId.ToString());
                         cmd.Parameters.AddWithValue("@ROLEMESSAGE", roleMessageId.ToString());
                         await cmd.ExecuteNonQueryAsync();
-                        CustomLog.PrintLog(LogSeverity.Info, "Database",
+                        await CustomLog.PrintLog(LogSeverity.Info, "Database",
                             $"Changed RoleMessage to {roleMessageId} (GuildId: {guildId})");
                     }
                 }
@@ -355,7 +355,7 @@ namespace IrisBot.Database
                         cmd.Parameters.AddWithValue("@ID", guildId.ToString());
                         cmd.Parameters.AddWithValue("@ROLEEMOJI", roleEmojis.ToString());
                         await cmd.ExecuteNonQueryAsync();
-                        CustomLog.PrintLog(LogSeverity.Info, "Database",
+                        await CustomLog.PrintLog(LogSeverity.Info, "Database",
                             $"Added emoji role RoleID: {roleId}, EmojiID: {emojiId} (GuildId: {guildId})");
                     }
                 }
@@ -412,7 +412,7 @@ namespace IrisBot.Database
                         cmd.Parameters.AddWithValue("@ROLEEMOJI", roleEmojis.ToString());
 
                         await cmd.ExecuteNonQueryAsync();
-                        CustomLog.PrintLog(LogSeverity.Info, "Database",
+                        await CustomLog.PrintLog(LogSeverity.Info, "Database",
                             $"Removed emoji role RoleID: {roleId}, EmojiID: {emojiId} (GuildId: {guildId})");
                     }
 
@@ -504,7 +504,7 @@ namespace IrisBot.Database
                         if (GetGuildsList().Find(x => x.GuildId == settings.GuildId) == null)
                             GetGuildsList().Add(settings);
 
-                        CustomLog.PrintLog(LogSeverity.Info, "Database",
+                        await CustomLog.PrintLog(LogSeverity.Info, "Database",
                             $"New database added successfully (GuildId: {settings.GuildId}");
                     }
                 }                   
@@ -541,7 +541,7 @@ namespace IrisBot.Database
                         cmd.Parameters.AddWithValue("@ID", guildId.ToString());
                         int result = await cmd.ExecuteNonQueryAsync();
 
-                        CustomLog.PrintLog(LogSeverity.Info, "Database",
+                        await CustomLog.PrintLog(LogSeverity.Info, "Database",
                             $"Database removed successfully (GuildId: {guildId}");
                     }
                 }
