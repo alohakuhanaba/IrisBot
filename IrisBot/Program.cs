@@ -47,41 +47,6 @@ namespace IrisBot
         public Program()
         {
             MaxQueueCount = 200;
-            if (string.IsNullOrEmpty(RestUri))
-            {
-                CustomLog.PrintLog(LogSeverity.Error, "Bot", "\"rest_uri\" is empty on appsettings.json");
-                Environment.Exit(1);
-            }
-            else if (string.IsNullOrEmpty(WebSocketUri))
-            {
-                CustomLog.PrintLog(LogSeverity.Error, "Bot", "\"websocket_uri\" is empty on appsettings.json");
-                Environment.Exit(1);
-            }
-            else if (string.IsNullOrEmpty(Password))
-            {
-                CustomLog.PrintLog(LogSeverity.Error, "Bot", "\"password\" is empty on appsettings.json");
-                Environment.Exit(1);
-            }
-            else if (string.IsNullOrEmpty(TestGuildId) && IsDebug()) // testguild_id는 Debug에서만 필요함
-            {
-                CustomLog.PrintLog(LogSeverity.Error, "Bot", "\"testguild_id\" is empty on appsettings.json");
-                Environment.Exit(1);
-            }
-            else if (string.IsNullOrEmpty(Token))
-            {
-                CustomLog.PrintLog(LogSeverity.Error, "Bot", "\"token\" is empty on appsettings.json");
-                Environment.Exit(1);
-            }
-            else if (string.IsNullOrEmpty(RestUri))
-            {
-                CustomLog.PrintLog(LogSeverity.Error, "Bot", "\"rest_uri\" is empty on appsettings.json");
-                Environment.Exit(1);
-            }
-            else if (string.IsNullOrEmpty(BotMessage))
-            {
-                CustomLog.PrintLog(LogSeverity.Error, "Bot", "\"bot_message\" is empty on appsettings.json");
-                Environment.Exit(1);
-            }
 
             _socketConfig = new DiscordSocketConfig()
             {
@@ -138,6 +103,42 @@ namespace IrisBot
 
         public async Task RunAsync()
         {
+            if (string.IsNullOrEmpty(RestUri))
+            {
+                await CustomLog.PrintLog(LogSeverity.Error, "Bot", "\"rest_uri\" is empty on appsettings.json");
+                Environment.Exit(1);
+            }
+            else if (string.IsNullOrEmpty(WebSocketUri))
+            {
+                await CustomLog.PrintLog(LogSeverity.Error, "Bot", "\"websocket_uri\" is empty on appsettings.json");
+                Environment.Exit(1);
+            }
+            else if (string.IsNullOrEmpty(Password))
+            {
+                await CustomLog.PrintLog(LogSeverity.Error, "Bot", "\"password\" is empty on appsettings.json");
+                Environment.Exit(1);
+            }
+            else if (string.IsNullOrEmpty(TestGuildId) && IsDebug()) // testguild_id는 Debug에서만 필요함
+            {
+                await CustomLog.PrintLog(LogSeverity.Error, "Bot", "\"testguild_id\" is empty on appsettings.json");
+                Environment.Exit(1);
+            }
+            else if (string.IsNullOrEmpty(Token))
+            {
+                await CustomLog.PrintLog(LogSeverity.Error, "Bot", "\"token\" is empty on appsettings.json");
+                Environment.Exit(1);
+            }
+            else if (string.IsNullOrEmpty(RestUri))
+            {
+                await CustomLog.PrintLog(LogSeverity.Error, "Bot", "\"rest_uri\" is empty on appsettings.json");
+                Environment.Exit(1);
+            }
+            else if (string.IsNullOrEmpty(BotMessage))
+            {
+                await CustomLog.PrintLog(LogSeverity.Error, "Bot", "\"bot_message\" is empty on appsettings.json");
+                Environment.Exit(1);
+            }
+
             await GuildSettings.InitializeAsync(); // appsettings.json 불러오기
 
             var client = _services.GetRequiredService<DiscordShardedClient>();
@@ -175,7 +176,7 @@ namespace IrisBot
             string jsonPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "appsettings.json");
             if (!File.Exists(jsonPath))
             {
-                CustomLog.PrintLog(LogSeverity.Error, "Bot", "appsettings.json is not exists.");
+                await CustomLog.PrintLog(LogSeverity.Error, "Bot", "appsettings.json is not exists.");
                 Environment.Exit(1);
             }
 
@@ -200,7 +201,7 @@ namespace IrisBot
                         PagelistCount = pagelistCount;
                     else
                     {
-                        CustomLog.PrintLog(LogSeverity.Warning, "Bot", "\"pagelist_count\" is empty on appsettings.json.\r\nAutomatically set to default value 10.");
+                        await CustomLog.PrintLog(LogSeverity.Warning, "Bot", "\"pagelist_count\" is empty on appsettings.json.\r\nAutomatically set to default value 10.");
                         PagelistCount = 10;
                     }
 
@@ -208,19 +209,19 @@ namespace IrisBot
                         MaxPlaylistCount = playlistCount;
                     else
                     {
-                        CustomLog.PrintLog(LogSeverity.Warning, "Bot", "\"max_playlist_count\" is empty on appsettings.json.\r\nAutomatically set to default value 10.");
+                        await CustomLog.PrintLog(LogSeverity.Warning, "Bot", "\"max_playlist_count\" is empty on appsettings.json.\r\nAutomatically set to default value 10.");
                         MaxPlaylistCount = 10;
                     }
 
                     if (shardsCountResult)
                         ShardsCount = shardsCount;
                     else
-                        CustomLog.PrintLog(LogSeverity.Warning, "Bot", "\"shards_count\" is empty on appsettings.json.\r\nAutomatically set to default value 1.");
+                        await CustomLog.PrintLog(LogSeverity.Warning, "Bot", "\"shards_count\" is empty on appsettings.json.\r\nAutomatically set to default value 1.");
 
                     if (autoDisconnectDelayResult)
                         AutoDisconnectDelay = autoDisconnectDelay;
                     else
-                        CustomLog.PrintLog(LogSeverity.Warning, "Bot", "\"auto_disconnect_delay\" is empty on appsettings.json.\r\nAutomatically set to default value 600s.");
+                        await CustomLog.PrintLog(LogSeverity.Warning, "Bot", "\"auto_disconnect_delay\" is empty on appsettings.json.\r\nAutomatically set to default value 600s.");
                 }
             }
             catch (Exception ex)
@@ -232,7 +233,7 @@ namespace IrisBot
         private async Task LogAsync(LogMessage log)
         {
             if (log.Exception == null)
-                CustomLog.PrintLog(log.Severity, log.Source, log.Message);
+                await CustomLog.PrintLog(log.Severity, log.Source, log.Message);
             else
                 await CustomLog.ExceptionHandler(log.Exception);
         }

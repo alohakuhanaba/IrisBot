@@ -19,7 +19,7 @@ namespace IrisBot.Modules
         [SlashCommand("shard", "Display bot information")]
         [RequireBotPermission(GuildPermission.EmbedLinks)]
         [RequireBotPermission(GuildPermission.SendMessages)]
-        public async Task InfoAsync()
+        public async Task ShardAsync()
         {
             Translations lang = await TranslationLoader.FindGuildTranslationAsync(Context.Guild.Id);
             EmbedBuilder eb = new EmbedBuilder();

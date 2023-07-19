@@ -14,13 +14,7 @@ namespace IrisBot.Modules
         [RequireBotPermission(GuildPermission.SendMessages)]
         public async Task MapleggSearchAsync(string nickname)
         {
-            Translations lang = await TranslationLoader.FindGuildTranslationAsync(Context.Guild.Id);
             EmbedBuilder eb = new EmbedBuilder();
-            if (lang != Translations.Korean)
-            {
-                await RespondAsync("🚫 Sorry, this feature is only supported for Korean discord server.\r\nChange bot language to Korean on this server(/language).", ephemeral: true);
-                return;
-            }
 
             UserInfo user = new UserInfo(nickname);
             if (user.IsError)

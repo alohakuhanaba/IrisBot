@@ -34,14 +34,14 @@ namespace IrisBot.Modules
             {
                 if (Program.IsDebug())
                 {
-                    CustomLog.PrintLog(LogSeverity.Warning, "Bot",
+                    await CustomLog.PrintLog(LogSeverity.Warning, "Bot",
                         $"Bot is running on Debug build. Commands will be registered only on specified guild id. ({Program.TestGuildId})");
 
                     await Task.Run(async () => await _handler.RegisterCommandsToGuildAsync(Convert.ToUInt64(Program.TestGuildId), true));
                 }
                 else
                 {
-                    CustomLog.PrintLog(LogSeverity.Info, "Bot", "Bot is running on Release build.");
+                    await CustomLog.PrintLog(LogSeverity.Info, "Bot", "Bot is running on Release build.");
                     await Task.Run(async () => await _handler.RegisterCommandsGloballyAsync(true));
                 }
 
@@ -66,6 +66,22 @@ namespace IrisBot.Modules
             _client.SelectMenuExecuted += SelectMenuHandler;
             _client.ReactionAdded += ReactionAdded;
             _client.ReactionRemoved += ReactionRemoved;
+            _client.SlashCommandExecuted += SlashCommandExecuted;
+            _client.MessageCommandExecuted += MessageCommandExecuted;
+        }
+
+
+
+        private async Task SlashCommandExecuted(SocketSlashCommand cmd)
+        {
+            await CustomLog.PrintLog(LogSeverity.Info, "Interaction",
+                    $"Slash Command executed {cmd.CommandName} (Guild: {cmd.GuildId}, Channel: {cmd.Channel.Name}, User: {cmd.User.Username})");
+        }
+
+        private async Task MessageCommandExecuted(SocketMessageCommand cmd)
+        {
+            await CustomLog.PrintLog(LogSeverity.Info, "Interaction",
+                $"Message Command executed {cmd.CommandName} (Guild: {cmd.GuildId}, Channel: {cmd.Channel.Name}, User: {cmd.User.Username})");
         }
 
         private async Task ReactionRemoved(Cacheable<IUserMessage, ulong> arg1, Cacheable<IMessageChannel, ulong> arg2, SocketReaction reaction)
@@ -130,7 +146,7 @@ namespace IrisBot.Modules
         private async Task LogAsync(LogMessage log)
         {
             if (log.Exception == null)
-                CustomLog.PrintLog(log.Severity, log.Source, log.Message);
+                await CustomLog.PrintLog(log.Severity, log.Source, log.Message);
             else
                 await CustomLog.ExceptionHandler(log.Exception);
         }
@@ -341,7 +357,7 @@ namespace IrisBot.Modules
                 var context = new ShardedInteractionContext(_client, interaction);
 
                 var result = await _handler.ExecuteCommandAsync(context, _services);
-                CustomLog.PrintLog(LogSeverity.Info, "Interaction",
+                await CustomLog.PrintLog(LogSeverity.Info, "Interaction",
                     $"Command executed (Guild: {interaction.GuildId}, Channel: {interaction.Channel.Name}, User: {interaction.User.Username})");
 
                 if (!result.IsSuccess)

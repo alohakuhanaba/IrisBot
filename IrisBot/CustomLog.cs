@@ -7,14 +7,26 @@ namespace IrisBot
     {
         private static object _MessageLock = new object(); // ThreadSafe 상태로 color를 변경하기 위함
 
-        /// <summary>
-        /// 로그를 출력하는 함수
-        /// </summary>
-        /// <param name="logLevel">로그 레벨</param>
-        /// <param name="source">로그 종류</param>
-        /// <param name="text">내용</param>
-        public static void PrintLog(LogSeverity logLevel, string source, string text)
+        public static async Task PrintLog(LogSeverity logLevel, string source, string text)
         {
+            string ExceptionDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Log");
+            string FileName = $"[{DateTime.Now.ToString("yyyy-MM-dd")}]_Bot.log"; // ..\Log\[2023-02-16]_Bot.log
+
+            try
+            {
+                if (!Directory.Exists(ExceptionDirectory))
+                    Directory.CreateDirectory(ExceptionDirectory);
+
+                using (StreamWriter sw = new StreamWriter(Path.Combine(ExceptionDirectory, FileName), true))
+                {
+                    await sw.WriteLineAsync($"{DateTime.Now.ToString("hh:mm:ss")} [{logLevel}] {source}\t{text}");
+                }
+            }
+            catch
+            {
+                
+            }
+
             lock (_MessageLock) // ThreadSafe 상태로 color를 변경하기 위함
             {
                 Console.Write(DateTime.Now.ToString("hh:mm:ss"));
@@ -69,7 +81,7 @@ namespace IrisBot
                     Console.ResetColor();
                 }
 
-                if (!string.Equals(ex.GetType().ToString(), "Discord.WebSocket.GatewayReconnectException")) // Discord는 한번씩 재접속을 요청한다.
+                if (!string.Equals(ex.GetType().ToString(), "Discord.WebSocket.GatewayReconnectException") || string.Equals(ex.ToString(), "WebSocket connection was closed")) // Discord는 한번씩 재접속을 요청한다.
                 {
                     string ExceptionDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Exception");
                     string FileName = $"[{DateTime.Now.ToString("yyyy-MM-dd-hh-mm-ss")}]_Exception.log"; // ..\Exception\[2023-02-16-13-51-40]_Exception.log

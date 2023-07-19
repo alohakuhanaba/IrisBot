@@ -39,7 +39,7 @@ namespace IrisBot.Database
                     isExists = true;
                 else if (di.GetFiles().Length >= Program.MaxPlaylistCount)
                     return PlaylistResult.CreationLimit;
-                else if (currentTrack != null && queue != null)
+                else if (currentTrack == null && queue == null)
                     throw new ArgumentNullException();
                     
 
