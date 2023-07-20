@@ -95,8 +95,12 @@ namespace IrisBot
                         HtmlDocument guildDoc = guild.Load(hrefValue);
                         HtmlNodeCollection info = guildDoc.DocumentNode.SelectNodes("//div[contains(@class, 'col-lg-25 col-md-4 col-sm-6 col-6 mt-2')]");
                         Guild = linkNode.InnerText;
-                        GuildRank = info[1].SelectSingleNode(".//span")?.InnerText?.ParseInt();
-                        GuildSize = info[3].SelectSingleNode(".//span")?.InnerText?.ParseInt();
+
+                        if (info != null)
+                        {
+                            GuildRank = info[1].SelectSingleNode(".//span")?.InnerText?.ParseInt();
+                            GuildSize = info[3].SelectSingleNode(".//span")?.InnerText?.ParseInt();
+                        }
                     }
                 }
             }

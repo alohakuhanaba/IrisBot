@@ -81,7 +81,7 @@ namespace IrisBot.Database
                         {
                             using (var createTable = new SQLiteCommand("CREATE TABLE Guilds(ID TEXT PRIMARY KEY, VOLUME REAL, LANG INTEGER, SEARCHMODE INTEGER, ROLEMESSAGE TEXT, ROLEEMOJI TEXT, ISPRIVATE INTEGER)", conn))
                             {
-                                await CustomLog.PrintLog(LogSeverity.Warning, "Database", "Table \"Guilds\" not exists. Creating new one.");
+                                await CustomLog.PrintLog(LogSeverity.Warning, "Database", "Table \"Guilds\" does not exists. Creating new one.");
                                 await createTable.ExecuteNonQueryAsync();
                             }
                         }

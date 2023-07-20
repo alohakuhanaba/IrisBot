@@ -70,8 +70,6 @@ namespace IrisBot.Modules
             _client.MessageCommandExecuted += MessageCommandExecuted;
         }
 
-
-
         private async Task SlashCommandExecuted(SocketSlashCommand cmd)
         {
             string param = "";

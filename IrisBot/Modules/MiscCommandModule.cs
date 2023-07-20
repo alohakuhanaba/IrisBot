@@ -16,7 +16,7 @@ namespace IrisBot.Modules
 {
     public class MiscCommandModule : InteractionModuleBase<ShardedInteractionContext>
     {
-        [SlashCommand("shard", "Display bot information")]
+        [SlashCommand("shard", "Display shard information")]
         [RequireBotPermission(GuildPermission.EmbedLinks)]
         [RequireBotPermission(GuildPermission.SendMessages)]
         public async Task ShardAsync()
@@ -33,7 +33,48 @@ namespace IrisBot.Modules
             eb.WithDescription($"{await TranslationLoader.GetTranslationAsync("average_ping", lang)}: {Context.Client.Shards.Average(x => x.Latency)} ms");
             eb.WithFooter($"{await TranslationLoader.GetTranslationAsync("current_shard", lang)}: {Context.Client.GetShardFor(Context.Guild).ShardId}");
             eb.WithColor(Color.Purple);
-            await RespondAsync("", embed: eb.Build());
+            await RespondAsync("", embed: eb.Build(), ephemeral: true);
+        }
+
+        [SlashCommand("info", "Display bot information")]
+        [RequireBotPermission(GuildPermission.EmbedLinks)]
+        [RequireBotPermission(GuildPermission.SendMessages)]
+        public async Task InfoAsync()
+        {
+            Translations lang = await TranslationLoader.FindGuildTranslationAsync(Context.Guild.Id);
+            EmbedBuilder eb = new EmbedBuilder();
+            eb.WithAuthor(Context.Client.CurrentUser);
+
+            eb.AddField($"{await TranslationLoader.GetTranslationAsync("irisbot_info", lang)}",
+                $"[Github](https://github.com/tree8069/IrisBot)\r\n" +
+                $"Copyright (c) 2023 Asteria. All rights reserved.\r\n" +
+                $"[MIT License](https://github.com/tree8069/IrisBot/blob/master/LICENSE.txt)\r\n" +
+                $"[{await TranslationLoader.GetTranslationAsync("tos", lang)}](https://github.com/tree8069/IrisBot/blob/master/Terms%20of%20service), " +
+                $"[{await TranslationLoader.GetTranslationAsync("privacy_policy", lang)}](https://github.com/tree8069/IrisBot/blob/master/Privacy%20Policy)");
+
+            eb.AddField("Discord.NET",
+                "[Github](https://github.com/discord-net/Discord.Net)\r\n" +
+                "Copyright (c) 2015-2022 Discord.Net Contributors. All rights reserved.\r\n" +
+                "[MIT License](https://github.com/discord-net/Discord.Net/blob/dev/LICENSE)");
+
+            eb.AddField("HtmlAgilityPack",
+                "[Github](https://github.com/zzzprojects/html-agility-pack)\r\n" +
+                "Copyright (c) ZZZ Projects Inc. All rights reserved.\r\n" +
+                "[MIT License](https://github.com/zzzprojects/html-agility-pack/blob/master/LICENSE)");
+
+            eb.AddField("Lavalink.NET",
+                "[Github](https://github.com/angelobreuer/Lavalink4NET)\r\n" +
+                "Copyright (c) 2019-2021 Angelo Breuer. All rights reserved.\r\n" +
+                "[MIT License](https://github.com/angelobreuer/Lavalink4NET/blob/dev/LICENSE)");
+
+            eb.AddField("Newtonsoft.Json",
+                "[Github](https://github.com/JamesNK/Newtonsoft.Json)\r\n" +
+                "Copyright (c) 2007 James Newton-King. All rights reserved.\r\n" +
+                "[MIT License](https://github.com/JamesNK/Newtonsoft.Json/blob/master/LICENSE.md)");
+
+            eb.WithFooter("Coded with C# (.NET Core 6.0)");
+            eb.WithColor(Color.Purple);
+            await RespondAsync("", embed: eb.Build(), ephemeral: true);
         }
 
         [SlashCommand("help", "help about command")]
@@ -46,7 +87,9 @@ namespace IrisBot.Modules
             eb.WithAuthor(Context.Client.CurrentUser);
             eb.WithDescription($"{await TranslationLoader.GetTranslationAsync("bot_description", lang)}\r\n" +
                 $"[Github](https://github.com/tree8069/Project-Iris), " +
-                $"[{await TranslationLoader.GetTranslationAsync("invitation_link", lang)}](https://discord.com/api/oauth2/authorize?client_id=930387137436721172&permissions=551940057088&scope=bot)");
+                $"[{await TranslationLoader.GetTranslationAsync("invitation_link", lang)}](https://discord.com/api/oauth2/authorize?client_id=930387137436721172&permissions=551940057088&scope=bot), " +
+                $"[{await TranslationLoader.GetTranslationAsync("tos", lang)}](https://github.com/tree8069/IrisBot/blob/master/Terms%20of%20service), " +
+                $"[{await TranslationLoader.GetTranslationAsync("privacy_policy", lang)}](https://github.com/tree8069/IrisBot/blob/master/Privacy%20Policy)");
 
             StringBuilder sb = new StringBuilder();
             sb.AppendLine(await TranslationLoader.GetTranslationAsync("help_join", lang));
@@ -72,6 +115,7 @@ namespace IrisBot.Modules
             sb.Clear();
 
             sb.AppendLine(await TranslationLoader.GetTranslationAsync("help_shard", lang));
+            sb.AppendLine(await TranslationLoader.GetTranslationAsync("help_info", lang));
             sb.AppendLine(await TranslationLoader.GetTranslationAsync("help_language", lang));
             eb.AddField(await TranslationLoader.GetTranslationAsync("help_misc_header", lang), sb.ToString());
             sb.Clear();

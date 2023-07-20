@@ -45,6 +45,9 @@
 
   "bot_description": "오픈소스 디스코드 음악 봇",
   "invitation_link": "초대 링크",
+  "irisbot_info": "Iris Bot은 오픈소스 프로젝트입니다",
+  "tos": "이용약관",
+  "privacy_policy": "개인정보취급방침",
 
   "help_music_header": "음악 재생",
   "help_music": "`/music <링크 혹은 단어>` : 검색 결과 중 하나를 선택하여 재생합니다. (영상/재생 목록)링크를 입력 시 자동으로 해당 링크의 음원을 재생합니다.",
@@ -67,6 +70,7 @@
   "help_queue_header": "대기열 관리",
 
   "help_shard": "`/shard` : 봇 상태와 이 디스코드 서버가 접속한 샤드 정보를 표시합니다.",
+  "help_info": "`/info` : 봇 정보와 이용약관, 개인정보 보호 정책을 출력합니다.",
   "help_language": "`/language <언어>` : 이 서버에서 봇이 사용할 언어를 변경합니다.",
   "help_misc_header": "기타",
 

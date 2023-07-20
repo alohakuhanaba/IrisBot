@@ -81,7 +81,7 @@ namespace IrisBot
                     Console.ResetColor();
                 }
 
-                if (!string.Equals(ex.GetType().ToString(), "Discord.WebSocket.GatewayReconnectException") || string.Equals(ex.ToString(), "WebSocket connection was closed")) // Discord는 한번씩 재접속을 요청한다.
+                if (!string.Equals(ex.GetType().ToString(), "Discord.WebSocket.GatewayReconnectException") || string.Equals(ex.Message, "WebSocket connection was closed")) // Discord는 한번씩 재접속을 요청한다.
                 {
                     string ExceptionDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Exception");
                     string FileName = $"[{DateTime.Now.ToString("yyyy-MM-dd-hh-mm-ss")}]_Exception.log"; // ..\Exception\[2023-02-16-13-51-40]_Exception.log

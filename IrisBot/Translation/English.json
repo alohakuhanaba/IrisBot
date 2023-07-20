@@ -45,6 +45,9 @@
 
   "bot_description": "Open-sourced Discord music bot",
   "invitation_link": "Invitation link",
+  "irisbot_info": "Iris Bot is open source project",
+  "tos": "Terms of Service",
+  "privacy_policy": "Privacy Policy",
 
   "help_music_header": "PLAY MUSIC",
   "help_music": "`/music <link or phrase>` : Search tracks and select one to play. If you put the (playlist/video)link then player directly play it.",
@@ -67,6 +70,7 @@
   "help_queue_header": "QUEUE MANAGEMENT",
 
   "help_shard": "`/shard` : Display shards and shard info for this server.",
+  "help_info": "`/info` : Display bot info, Terms of Service and Privacy Policy.",
   "help_language": "`/language <locale>` : Set bot's language on this server.'",
   "help_misc_header": "MISC",
 
