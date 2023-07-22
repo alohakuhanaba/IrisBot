@@ -11,7 +11,7 @@ namespace IrisBot
         {
             string ExceptionDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Log");
             string FileName = $"[{DateTime.Now.ToString("yyyy-MM-dd")}]_Bot.log"; // ..\Log\[2023-02-16]_Bot.log
-
+            
             try
             {
                 if (!Directory.Exists(ExceptionDirectory))

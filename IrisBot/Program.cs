@@ -58,6 +58,7 @@ namespace IrisBot
             };
             _client = new DiscordShardedClient(_socketConfig);
 
+#pragma warning disable CS8601 // 가능한 null 참조 할당입니다.
             _services = new ServiceCollection()
                 // Discord.NET
                 .AddSingleton<InteractionModule>()
@@ -93,6 +94,7 @@ namespace IrisBot
                 // InactivityTracking
                 
                 .BuildServiceProvider();
+#pragma warning restore CS8601 // 가능한 null 참조 할당입니다.
         }
 
         static void Main(string[] args)
