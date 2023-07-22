@@ -259,7 +259,7 @@ namespace IrisBot.Modules
             {
                 await RespondAsync(await TranslationLoader.GetTranslationAsync("nothing_playing", lang), ephemeral: true);
             }
-            else if (player.VoiceChannelId != user.VoiceChannel.Id)
+            else if (user.VoiceChannel == null || player.VoiceChannelId != user.VoiceChannel.Id)
             {
                 await RespondAsync(await TranslationLoader.GetTranslationAsync("different_channel_warning", lang), ephemeral: true);
             }
