@@ -120,12 +120,12 @@ namespace IrisBot
                 totalScore = 100;
                 Message.AppendLine("- 인기도가 음수입니다.");
             }
-            else if (Popularity < 130)
+            else if (Popularity < 50)
             {
                 totalScore += 10;
                 Message.AppendLine("- 인기도가 낮습니다.");
             }
-            else if (Popularity < 200)
+            else if (Popularity < 100)
             {
                 totalScore += 5;
                 Message.AppendLine("- 인기도가 소폭 낮습니다.");

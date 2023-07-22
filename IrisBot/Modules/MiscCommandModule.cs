@@ -86,10 +86,11 @@ namespace IrisBot.Modules
             EmbedBuilder eb = new EmbedBuilder();
             eb.WithAuthor(Context.Client.CurrentUser);
             eb.WithDescription($"{await TranslationLoader.GetTranslationAsync("bot_description", lang)}\r\n" +
-                $"[Github](https://github.com/tree8069/Project-Iris), " +
+                $"[Github](https://github.com/tree8069/IrisBot), " +
                 $"[{await TranslationLoader.GetTranslationAsync("invitation_link", lang)}](https://discord.com/api/oauth2/authorize?client_id=930387137436721172&permissions=551940057088&scope=bot), " +
                 $"[{await TranslationLoader.GetTranslationAsync("tos", lang)}](https://github.com/tree8069/IrisBot/blob/master/Terms%20of%20service), " +
-                $"[{await TranslationLoader.GetTranslationAsync("privacy_policy", lang)}](https://github.com/tree8069/IrisBot/blob/master/Privacy%20Policy)");
+                $"[{await TranslationLoader.GetTranslationAsync("privacy_policy", lang)}](https://github.com/tree8069/IrisBot/blob/master/Privacy%20Policy)\r\n" +
+                $"파라미터의 <>는 빼고 입력하시기 바랍니다.");
 
             StringBuilder sb = new StringBuilder();
             sb.AppendLine(await TranslationLoader.GetTranslationAsync("help_join", lang));
