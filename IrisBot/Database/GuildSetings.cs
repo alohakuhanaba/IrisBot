@@ -8,6 +8,7 @@ using System.Data.SQLite;
 using System.Reflection.PortableExecutable;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Xml.Linq;
 
 namespace IrisBot.Database
 {
@@ -532,6 +533,7 @@ namespace IrisBot.Database
                 string paths = AppDomain.CurrentDomain.BaseDirectory;
                 AppDomain.CurrentDomain.SetData("DataDirectory", paths);
 
+                // 데이터베이스 자동 삭제
                 using (var conn = new SQLiteConnection(connStr))
                 {
                     await conn.OpenAsync();
@@ -544,6 +546,15 @@ namespace IrisBot.Database
                         await CustomLog.PrintLog(LogSeverity.Info, "Database",
                             $"Database removed successfully (GuildId: {guildId}");
                     }
+                }
+
+                // 플레이리스트 자동 삭제
+                string path = Path.Combine(Program.PlaylistDirectory, guildId.ToString());
+                DirectoryInfo di = new DirectoryInfo(path);
+                if (di.Exists)
+                {
+                    foreach (var file in di.GetFiles())
+                        file.Delete();
                 }
             }
             catch (Exception ex)
