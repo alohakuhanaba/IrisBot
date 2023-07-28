@@ -19,7 +19,7 @@ namespace IrisBot
 
                 using (StreamWriter sw = new StreamWriter(Path.Combine(ExceptionDirectory, FileName), true))
                 {
-                    await sw.WriteLineAsync($"{DateTime.Now.ToString("hh:mm:ss")} [{logLevel}] {source}\t{text}");
+                    await sw.WriteLineAsync($"{DateTime.Now.ToString("HH:mm:ss")} [{logLevel}] {source}\t{text}");
                 }
             }
             catch
@@ -29,7 +29,7 @@ namespace IrisBot
 
             lock (_MessageLock) // ThreadSafe 상태로 color를 변경하기 위함
             {
-                Console.Write(DateTime.Now.ToString("hh:mm:ss"));
+                Console.Write(DateTime.Now.ToString("HH:mm:ss"));
                 switch (logLevel)
                 {
                     case LogSeverity.Critical:
@@ -72,7 +72,7 @@ namespace IrisBot
             {
                 lock (_MessageLock) // ThreadSafe 상태로 color를 변경하기 위함
                 {
-                    Console.Write(DateTime.Now.ToString("hh:mm:ss"));
+                    Console.Write(DateTime.Now.ToString("HH:mm:ss"));
                     Console.ForegroundColor = ConsoleColor.DarkRed;
                     Console.Write(" [EXCEPTION] ");
                     Console.ForegroundColor = ConsoleColor.Yellow;
@@ -84,7 +84,7 @@ namespace IrisBot
                 if (!string.Equals(ex.GetType().ToString(), "Discord.WebSocket.GatewayReconnectException") || string.Equals(ex.Message, "WebSocket connection was closed")) // Discord는 한번씩 재접속을 요청한다.
                 {
                     string ExceptionDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Exception");
-                    string FileName = $"[{DateTime.Now.ToString("yyyy-MM-dd-hh-mm-ss")}]_Exception.log"; // ..\Exception\[2023-02-16-13-51-40]_Exception.log
+                    string FileName = $"[{DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss")}]_Exception.log"; // ..\Exception\[2023-02-16-13-51-40]_Exception.log
                     if (!Directory.Exists(ExceptionDirectory))
                         Directory.CreateDirectory(ExceptionDirectory);
 
