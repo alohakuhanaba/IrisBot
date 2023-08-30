@@ -461,17 +461,7 @@ namespace IrisBot.Modules
                 sb.AppendLine($"\r\nPage 1/{pageCount}```");
             }
 
-            await RespondAsync(sb.ToString(), components: component?.Build() ?? null);
-
-            // 기존 /list 명령 컴포넌트가 있을 경우 삭제한다.
-            GuildSettings? data = GuildSettings.GetGuildsList().Find(x => x.GuildId == Context.Guild.Id);
-            var msg = await GetOriginalResponseAsync();
-            if (data != null)
-            {
-                if (data.ListMessagdId != null)
-                    await Context.Channel.DeleteMessageAsync((ulong)data.ListMessagdId);
-                data.ListMessagdId = msg.Id;
-            }
+            await RespondAsync(sb.ToString(), components: component?.Build() ?? null, ephemeral: true);
         }
 
         [SlashCommand("skip", "Skip current track")]

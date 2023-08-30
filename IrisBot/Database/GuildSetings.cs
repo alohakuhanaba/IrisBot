@@ -506,7 +506,7 @@ namespace IrisBot.Database
                             GetGuildsList().Add(settings);
 
                         await CustomLog.PrintLog(LogSeverity.Info, "Database",
-                            $"New database added successfully (GuildId: {settings.GuildId}");
+                            $"New database added successfully (GuildId: {settings.GuildId})");
                     }
                 }                   
             }
@@ -544,7 +544,7 @@ namespace IrisBot.Database
                         int result = await cmd.ExecuteNonQueryAsync();
 
                         await CustomLog.PrintLog(LogSeverity.Info, "Database",
-                            $"Database removed successfully (GuildId: {guildId}");
+                            $"Database removed successfully (GuildId: {guildId})");
                     }
                 }
 
@@ -555,6 +555,8 @@ namespace IrisBot.Database
                 {
                     foreach (var file in di.GetFiles())
                         file.Delete();
+                    await CustomLog.PrintLog(LogSeverity.Info, "Database",
+                            $"Playlist removed successfully (GuildId: {guildId})");
                 }
             }
             catch (Exception ex)

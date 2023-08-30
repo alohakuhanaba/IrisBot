@@ -44,9 +44,9 @@ namespace IrisBot
                 if (profile == null || profile2 == null)
                     return;
 
-                Level = profile[0]?.InnerText?.ParseLevel();
-                Job = profile[1]?.InnerText?.Trim();
-                Popularity = profile[2]?.InnerText?.ParseInt();
+                Level = profile[1]?.InnerText?.ParseLevel();
+                Job = profile[2]?.InnerText?.Trim();
+                Popularity = profile[3]?.InnerText?.ParseInt();
                 DojangFloor = profile2[0].SelectSingleNode(".//h1")?.InnerText?.ParseInt();
                 Union = profile2[2].SelectSingleNode(".//span[@class=\"user-summary-level\"]")?.InnerText?.ParseInt();
                 ExpHistories = AnalyzieExpHistory(htmlDoc); // 최근 경험치 증감폭을 측정함
