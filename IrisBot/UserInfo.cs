@@ -83,7 +83,7 @@ namespace IrisBot
         {
             try
             {
-                var divNode = htmlDoc.DocumentNode.SelectSingleNode("//div[contains(@class, 'col-lg-2 col-md-4 col-sm-4 col-12')]");
+                var divNode = htmlDoc.DocumentNode.SelectSingleNode("//div[contains(@class, 'col-lg-2 col-md-4 col-sm-4 col-6 mt-3')]");
                 if (divNode != null)
                 {
                     var linkNode = divNode.SelectSingleNode(".//a[@href]");
